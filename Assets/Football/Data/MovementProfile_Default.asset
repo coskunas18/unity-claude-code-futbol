@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3ae07edf579a54bbbd00a740eb7bc1, type: 3}
+  m_Name: MovementProfile_Default
+  m_EditorClassIdentifier: Football.Runtime::Football.Players.MovementProfile
+  parameters:
+    walkSpeed: 1.6
+    jogSpeed: 5.2
+    sprintSpeed: 8.4
+    acceleration: 4.6
+    accelerationFalloff: 0.6
+    deceleration: 6.5
+    hardBrakeDeceleration: 9.5
+    maxTurnRateStanding: 720
+    maxTurnRateSprinting: 140
+    maxLateralAcceleration: 7.5
+    plantAndTurnAngle: 110
+    plantMinSpeed: 2.5
+    sharpTurnSpeedFactor: 0.6
+    freeTurnSpeed: 0.6
+    bodyTurnRateStanding: 720
+    bodyTurnRateSprinting: 260
+    strafeSpeedFactor: 0.62
+    backpedalSpeedFactor: 0.42
+    withBallSpeedFactor: 0.9
+    withBallAccelerationFactor: 0.85
+    withBallTurnFactor: 0.8
+    sprintStaminaDrain: 0.04
+    staminaRecovery: 0.02
+    minStaminaToSprint: 0.05
+    fatigueThreshold: 0.35
+    fatigueMinFactor: 0.8

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee2fab06db6e9841afbc9e7f77fd644, type: 3}
+  m_Name: BallPhysicsSettings
+  m_EditorClassIdentifier: Football.Runtime::Football.Ball.BallPhysicsSettings
+  parameters:
+    mass: 0.43
+    radius: 0.11
+    airDensity: 1.225
+    dragCoefficient: 0.25
+    liftPerSpinParameter: 1
+    maxLiftCoefficient: 0.35
+    airSpinDecayTime: 6
+    groundRestitution: 0.62
+    restitutionSpeedFalloff: 0.012
+    minRestitution: 0.35
+    settleSpeed: 0.5
+    groundFriction: 0.5
+    rollingResistance: 0.045
+    grassDrag: 0.2
+    groundSpinDecay: 3
+    postRestitution: 0.7
+    postFriction: 0.1
+    netAbsorption: 0.85
+    netFriction: 0.5
+    maxSubStep: 0.005

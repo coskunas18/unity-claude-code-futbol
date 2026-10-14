@@ -1,0 +1,43 @@
+# Normalise line endings for text; Git detects the rest.
+* text=auto
+
+# Code and docs
+*.cs     text diff=csharp
+*.asmdef text
+*.json   text
+*.md     text
+*.uss    text
+*.uxml   text
+*.shader text
+*.hlsl   text
+*.inputactions text
+
+# Unity YAML (Force Text serialization). Unity writes LF on every platform.
+*.unity      text eol=lf
+*.prefab     text eol=lf
+*.asset      text eol=lf
+*.mat        text eol=lf
+*.meta       text eol=lf
+*.controller text eol=lf
+*.anim       text eol=lf
+*.overrideController text eol=lf
+*.physicMaterial text eol=lf
+*.lighting   text eol=lf
+*.wlt        text eol=lf
+
+# Binary assets. Move these to Git LFS once models, textures and audio arrive.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.tga  binary
+*.psd  binary
+*.exr  binary
+*.hdr  binary
+*.fbx  binary
+*.blend binary
+*.wav  binary
+*.mp3  binary
+*.ogg  binary
+*.ttf  binary
+*.otf  binary
+*.dll  binary
