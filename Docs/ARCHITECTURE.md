@@ -195,7 +195,12 @@ Bilinen eksikler (uygulanmış gibi gösterilmiyor):
 - Pas, şut, orta ve kullanıcı vuruş tuşları yok (sayı tuşları yalnızca **debug test vuruşları**). → Aşama 2
 - İlk dokunuş/top kontrolü basit ("cushion"); özellik ve baskı etkisi yok. → Aşama 2
 - Oyuncu özellikleri yok; `ballControl` geçici bir alan. → Aşama 2
-- Animasyon ve model yok; oyuncu bir kapsül, ön tarafı beyaz işaretle gösteriliyor. → Aşama 2
+- Karakter ve hareket animasyonları eklendi (2026-10-14, Aşama 1 sonrası): Tripo ile üretilen model, Mixamo
+  iskeleti ve 9 Mixamo animasyonu (bekleme, yürüme, jog, geri jog, sola/sağa yana adım, koşu, pas, penaltı vuruşu).
+  Hareket animasyonları 2D blend tree ile vücuda göre hıza bağlı; klip pozisyonları kliplerden ölçülen doğal hızlar
+  (`PlayerAnimatorBuilder`). Eksikler: en hızlı klip 4,96 m/sn olduğu için sprintte animasyon ~1,7 kat hızlı
+  oynuyor (sprint klibi gerekiyor); ayak IK'sı yok; pas/şut animasyonları Animator'da var ama oyun mantığına ve
+  topa temas zamanına bağlı değil. → Aşama 2
 - Kafa vuruşu, zıplama, omuz omuza mücadele, oyuncu–oyuncu çarpışması yok. → Aşama 2–3
 - Top saha dışına çıkınca yalnızca olay üretiliyor ve 2 sn sonra ortaya konuyor; taç/korner/aut
   yeniden başlatmaları yok. → Aşama 4

@@ -21,6 +21,7 @@ namespace Football.EditorTools
     {
         public const string ScenePath = FootballAssetPaths.Scenes + "/Phase1_Pitch.unity";
         const string VolumeProfilePath = "Assets/Settings/SampleSceneProfile.asset";
+        const string CharacterMaterialPath = "Assets/Football/Art/Characters/Prototype/FootballPlayer_v1_Lit.mat";
 
         [MenuItem("Football/Build Phase 1 Scene")]
         static void BuildFromMenu()
@@ -121,6 +122,51 @@ namespace Football.EditorTools
             var root = new GameObject("Player_Home_10");
             root.transform.SetPositionAndRotation(new Vector3(-2f, 0f, 0f), Quaternion.LookRotation(Vector3.right));
 
+            var movement = root.AddComponent<PlayerMovementController>();
+            SetReference(movement, "profile", profile);
+            SetReference(movement, "commandSource", input);
+            SetReference(movement, "ball", ball);
+
+            var interaction = root.AddComponent<PlayerBallInteraction>();
+            SetReference(interaction, "ball", ball);
+
+            if (!TryAddCharacterModel(root, movement))
+                AddCapsuleStandIn(root);
+            return movement;
+        }
+
+        /// <summary>Rigged Mixamo character driven by the locomotion blend tree. The model faces +Z like the player root.</summary>
+        static bool TryAddCharacterModel(GameObject root, PlayerMovementController movement)
+        {
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(PlayerAnimatorBuilder.CharacterPath);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(CharacterMaterialPath);
+            if (model == null || material == null)
+            {
+                Debug.LogWarning($"[Football] Character model or material missing; using a capsule stand-in");
+                return false;
+            }
+
+            PlayerAnimatorBuilder.Result animator = PlayerAnimatorBuilder.Build();
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(model, root.transform);
+            instance.name = "Model";
+            instance.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            foreach (var renderer in instance.GetComponentsInChildren<Renderer>())
+                renderer.sharedMaterial = material;
+
+            var characterAnimator = instance.GetComponent<Animator>();
+            characterAnimator.runtimeAnimatorController = animator.Controller;
+            characterAnimator.applyRootMotion = false;
+            characterAnimator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+
+            var animation = root.AddComponent<PlayerAnimationController>();
+            animation.Configure(movement, characterAnimator, animator.Limits);
+            EditorUtility.SetDirty(animation);
+            Debug.Log($"[Football] Player animator: {animator.Report}");
+            return true;
+        }
+
+        static void AddCapsuleStandIn(GameObject root)
+        {
             var body = Visual(PrimitiveType.Capsule, "Body", root.transform,
                 FootballAssetPaths.GetOrCreateMaterial("Kit_Home", new Color(0.12f, 0.32f, 0.85f), 0.3f));
             body.transform.localPosition = Vector3.up * 0.9f;
@@ -130,15 +176,6 @@ namespace Football.EditorTools
                 FootballAssetPaths.GetOrCreateMaterial("Kit_Detail", new Color(0.95f, 0.95f, 0.95f), 0.3f));
             front.transform.localPosition = new Vector3(0f, 1.45f, 0.26f);
             front.transform.localScale = new Vector3(0.22f, 0.12f, 0.08f);
-
-            var movement = root.AddComponent<PlayerMovementController>();
-            SetReference(movement, "profile", profile);
-            SetReference(movement, "commandSource", input);
-            SetReference(movement, "ball", ball);
-
-            var interaction = root.AddComponent<PlayerBallInteraction>();
-            SetReference(interaction, "ball", ball);
-            return movement;
         }
 
         static Camera CreateCamera(BallController ball, Transform player)
